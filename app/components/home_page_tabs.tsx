@@ -7,28 +7,32 @@ import config from "@/config";
 import _ from "lodash";
 
 
-export default function HomePageTabs(props: {tabs: SearchorType[]}) {
-  const [tab, setTab] = React.useState<SearchorType|undefined>(props.tabs[0]);
-  const [segmente, setSegmente] = React.useState<Searchor|undefined>(props.tabs[0]?.searchors?.[0]);
+export default function HomePageTabs() {
+  const [tabs, setTabs] = React.useState<SearchorType[]>([]);
+  const [tab, setTab] = React.useState<SearchorType|undefined>();
+  const [segmente, setSegmente] = React.useState<Searchor|undefined>();
   const [value, setValue] = React.useState<string>('');
   const onSearch = () => {
     segmente && window.open(segmente?.value.replace('%s', value), '_blank');
     setValue('');
   }
+  React.useEffect(() => {
+    api.searchor().then(v=>{setTabs(v.data);setTab(v.data[0]); setSegmente(v[0]?.searchors?.[0])});
+  }, []);
   return (
     <Tabs 
       className="w-3xl mt-5 mx-auto" 
       variant="outline" 
       color="teal" 
       value={tab?.name}
-      onChange={v => v && setTab(_.find(props.tabs, {name: v}))}
+      onChange={v => v && setTab(_.find(tabs, {name: v}))}
     >
         <TabsList>
-          {props.tabs.map(item => <TabsTab key={item.id} value={item.name}>{item.name}</TabsTab>)}
+          {tabs.map(item => <TabsTab key={item.id} value={item.name}>{item.name}</TabsTab>)}
           <ActionIcon className="absolute! right-0" variant="subtle"><IconSettings /></ActionIcon>
         </TabsList>
         {
-          props.tabs.map(item => (
+          tabs.map(item => (
             <TabsPanel className="border border-t-0 p-0! border-(--tab-border-color)" key={item.id} value={item.name} pt="xs">
               <Input
               classNames={{
