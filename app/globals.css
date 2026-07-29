@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@import "@mantine/core/styles.css";
+@import '@mantine/dates/styles.css';
+@layer mantine, mantine-contextmenu;
+
+/* @plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+.select:open::picker(select) {
+  display: flex;
+}
+@plugin "./plugin"; */
+
+
+:root[data-mantine-color-scheme='dark'], :host([data-mantine-color-scheme='dark']) {
+  --mantine-color-header: #2d3748;
+}
+:root[data-mantine-color-scheme='light'], :host([data-mantine-color-scheme='light']) {
+  --mantine-color-header: #2d3748;
+}
+
+body {
+  @apply flex flex-col min-h-screen;
+}
+header {
+  @apply h-[40px] bg-(--mantine-color-header);
+}

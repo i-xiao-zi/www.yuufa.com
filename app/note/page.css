@@ -1,0 +1,32 @@
+.codex-editor {
+    @apply flex-grow;
+}
+.ce-block__content, .ce-toolbar__content {
+    @apply max-w-[calc(100%-64px)] ml-[64px];
+}
+
+.mantine-Tree-label .arrow {
+    @apply self-stretch flex;
+    span {
+        @apply w-[1em] inline-block self-stretch relative;
+        &::before {
+            content: '';
+            @apply block absolute w-px h-full bg-(--mantine-color-placeholder) left-1/2;
+        }
+    }
+    
+}
+
+.mantine-Tree-node {
+    &:last-child > .mantine-Tree-label .arrow span:last-child {
+            &::before {
+                @apply h-1/2;
+            }
+        }
+    & .mantine-Tree-label .arrow span:last-child {
+        &::after {
+            content: '';
+            @apply block w-1/2 my-auto h-px bg-(--mantine-color-placeholder) absolute top-1/2 left-1/2;
+        }
+    }
+}
