@@ -22,6 +22,7 @@ export default function YouNongPaiInfo(props: Props) {
   const [zhunong, setZhunong] = React.useState<YouNongPaiZhunong|undefined>(undefined);
   const input = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
+    api.younongpai.user(props.token.value).then(console.log);
     api.youNongPai(props.token.value).then(data => setInfo(data.data));
     api.youNongPaiDraw(props.token.value).then(data=>setDraw(data.data));
     api.youNongPaiGrowth(props.token.value).then(data=>setGrowth(data.data));
