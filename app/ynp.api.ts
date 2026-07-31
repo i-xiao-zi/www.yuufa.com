@@ -5,7 +5,7 @@ import qs from "qs";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const fetch = (uri: string, data: {[key: string]: any} = {}) => {
+const fetcher = (uri: string, data: {[key: string]: any} = {}) => {
         const headers = {
             'o': 'oUe5g7FGLV9frAZ_uYKandx_5V80',
             'apiFrom': 'WXMA',
@@ -13,6 +13,7 @@ const fetch = (uri: string, data: {[key: string]: any} = {}) => {
             'Content-Type': 'application/x-www-form-urlencoded',
             accessToken: data['accessToken'],
         };
+        console.log({uri, headers, data})
         return new Promise<any>(async (resolve, reject) => {
             const response = await fetch(`https://wcxapi.gxwcx.com/apiWxStore/v2/${uri}`, {
                 method: 'POST', 
@@ -28,28 +29,131 @@ const fetch = (uri: string, data: {[key: string]: any} = {}) => {
     }
 
 namespace YNP {
+
+    
+    export interface User {
+        nickName: string;
+        userName: string;
+        header: string;
+        gender: number;
+        birthday: number;
+        phone: string;
+        inviteName: string;
+        verifyState: number;
+        memberType: number;
+        isOfficial: number;
+        userId: number;
+        referrerId: number;
+        wechatNo: string;
+        qrcode: string;
+        selectPhone: null | string;
+        createTime: number;
+        unionName: string;
+        unionPhone: string;
+        areaServName: string;
+        areaServPhone: string;
+        isSetPayPwd: number; // 0 表示未设置支付密码
+    }
+    export interface DrawInfo {
+        balance: number;
+        freezeBalance: number;
+        totalBalance: number;
+        tocUsedBalance: number;
+        getCashImg: string;
+    }
+    export interface DrawLog {
+        logId: number;
+        fromLogId: number;
+        des: string;
+        userId: number;
+        hideLog: number;
+        bizId: number;
+        bizParam: string;
+        amount: number;
+        fromUser: number;
+        inOutState: number;
+        inOutType: number;
+        inOutProp: number;
+        createTime: number;
+        productTime: number;
+    }
+    export interface GrowthInfo {
+        growth: number;
+        allGrowth: number;
+        isSign: number;
+    }
+    export interface GrowthLog {
+        growthId: number;
+        userId: number;
+        growthType: number;
+        typeName: string;
+        growthProp: number;
+        createTime: number;
+        dateYmd: string;
+        growth: number;
+        bizId: number;
+        userName: null | string;
+        headUrl: null | string;
+        phone: null | string;
+        growth1: null | number;
+        growth2: null | number;
+        beginTime: null | number;
+        endTime: null | number;
+        isSystem: null | number;
+    }
+    export interface ZhunongInfo {
+        userId?: number;
+        header: string;
+        nickName: string;
+        memberType: number;
+        isCountyServer: number;
+        znPoint: number;
+        znUsedPoint: number;
+        znFreezePoint: number;
+        recommendProducts: {
+            productMainId: number;
+            [key: string]: any;
+        }[];
+        specials: {
+            specialId: number;
+            [key: string]: any;
+        }[];
+        topAdvs?: any;
+
+    }
+    export interface Task {
+        taskType: string;
+        taskName: string;
+        taskDes: string;
+        isFinish: number;
+        finishTimes: number;
+        allTimes: number;
+        growth: number;
+        maxGrowth: number;
+    }
+
     // 抽奖
-    export const startDraw = (token: string) => fetch('/index/startDraw', {accessToken: token});
-    export const zhunongLog = (token: string) => fetch('/userIntegral/findUserZnPoiontLogs', {page: 1,type: 1,pageSize: 1000,accessToken: token});
-    export const zhunongInfo = (token: string) => fetch('/userIntegral/free/findZnIndex', {accessToken: token});
+    export const startDraw = (token: string) => fetcher('/index/startDraw', {accessToken: token});
+    export const zhunongLogs = (token: string) => fetcher('/userIntegral/findUserZnPoiontLogs', {page: 1,type: 1,pageSize: 1000,accessToken: token});
+    export const zhunongInfo = (token: string) => fetcher('/userIntegral/free/findZnIndex', {accessToken: token});
     // 抽奖状态
-    export const getDrawIndex = (token: string) => fetch('/index/getDrawIndex', {accessToken: token});
-    export const findUserBalance = (token: string) => fetch('/getCash/findUserBalance', {accessToken: token});
-    export const userInfo = (token: string) => fetch('/account/findUserInfo', {accessToken: token});
-    export const findMoneyLogs = (token: string) => fetch('/getCash/findMoneyLogs', {page: 1,type: 1,startDay: '20260101',endDay: dayjs().tz('Asia/Shanghai').format('YYYYMMDD'),pageSize: 1000,accessToken: token});
-    export const freeIndex = (token: string) => fetch('/index/free/index', {accessToken: token});
+    export const getDrawIndex = (token: string) => fetcher('/index/getDrawIndex', {accessToken: token});
+    export const findUserBalance = (token: string) => fetcher('/getCash/findUserBalance', {accessToken: token});
+    export const userInfo = (token: string) => fetcher('/account/findUserInfo', {accessToken: token});
+    export const findMoneyLogs = (token: string) => fetcher('/getCash/findMoneyLogs', {page: 1,type: 1,startDay: '20260101',endDay: dayjs().tz('Asia/Shanghai').format('YYYYMMDD'),pageSize: 1000,accessToken: token});
+    export const freeIndex = (token: string) => fetcher('/index/free/index', {accessToken: token});
     // 成长信息
-    export const growthInfo = (token: string) => fetch('/growth/findUserGrowthInfo', {accessToken: token});
+    export const growthInfo = (token: string) => fetcher('/growth/findUserGrowthInfo', {accessToken: token});
     // 成长任务
-    export const growthTask = (token: string) => fetch('/growth/findUserGrowthTask', {accessToken: token});
+    export const growthTask = (token: string) => fetcher('/growth/findUserGrowthTask', {accessToken: token});
     // 成长日志
-    export const growthLogs = (token: string) => fetch('/growth/userGrowthDetail', {page: 1, pageSize: 1000,type: 1,accessToken: token,});
+    export const growthLogs = (token: string) => fetcher('/growth/userGrowthDetail', {page: 1, pageSize: 1000,type: 1,accessToken: token,});
     // 签到
-    export const growthSignIn = (token: string) => fetch('/growth/signIn', {accessToken: token});
+    export const growthSignIn = (token: string) => fetcher('/growth/signIn', {accessToken: token});
     // 浏览
-    export const growthViewSign = (id, token: string) => fetch('/growth/viewMallSign', {productMainId: id, accessToken: token});
+    export const growthViewSign = (token: string, id: number) => fetcher('/growth/viewMallSign', {productMainId: id, accessToken: token});
     // 分享助农好货
-    export const growthShareProduct = (id, token: string) => fetch('/growth/shareProductSign', {productMainId: id, accessToken: token});
+    export const growthShareProduct = (token: string, id: number) => fetcher('/growth/shareProductSign', {productMainId: id, accessToken: token});
 }
 
 export default YNP;

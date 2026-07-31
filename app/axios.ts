@@ -4,7 +4,7 @@ import config from "@/config";
 
 const defaultConfig: AxiosRequestConfig = {
     baseURL: config.base_api,
-    timeout: 6000,
+    timeout: 0,
     headers: { "Content-Type": "application/json;charset=utf-8" },
     // paramsSerializer: { serialize: stringify }
 };

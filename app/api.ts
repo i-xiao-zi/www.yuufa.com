@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import * as http from "@/http";
 import { Paginate, Video, VideoOrigin } from "./api.t";
 import YNP from "./ynp.api";
+import { Database } from "./supabase";
 
 
 export interface Searchor {
@@ -138,7 +139,7 @@ export interface YouNongPaiZhunong {
     logs: any[],
 }
 
-export const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!);
+export const supabase = createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!);
 
 export default {
     searchor: () => http.get<SearchorType[]>('/searchor'),
@@ -156,10 +157,19 @@ export default {
     videoOriginDetail: (id: number) => http.get<VideoOrigin>(`/video/origin/${id}`),
     videoList: ({video_name, origin_id, page, size}: {video_name?:string, origin_id?: number, page?: number, size?: number}) => http.get<Paginate<Video[]>>(`/video?video_name=${video_name || ''}&origin_id=${origin_id || ''}&page=${page || ''}&size=${size || ''}`),
     videoDetail: (id: number) => http.get<Video>(`/video/video/${id}`),
-    younongpai: {
+    ynp: {
         tokens: () => supabase.from('younongpais').select('*'),
         user: (token: string) => YNP.userInfo(token),
-        
-
+        tasks: (token: string) => YNP.growthTask(token),
+        drawInfo: (token: string) => YNP.findUserBalance(token),
+        drawLogs: (token: string) => YNP.findMoneyLogs(token),
+        growthInfo: (token: string) => YNP.growthInfo(token),
+        growthLogs: (token: string) => YNP.growthLogs(token),
+        zhunongInfo: (token: string) => YNP.zhunongInfo(token),
+        zhunongLogs: (token: string) => YNP.zhunongLogs(token),
+        draw: (token: string) => YNP.startDraw(token),
+        view: (token: string, id: number) => YNP.growthViewSign(token, id),
+        sign: (token: string) => YNP.growthSignIn(token),
+        share: (token: string, id: number) => YNP.growthShareProduct(token, id),
     }
 }

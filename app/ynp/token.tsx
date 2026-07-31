@@ -3,7 +3,7 @@
 import React from "react";
 import {Input, SegmentedControl, SegmentedControlItem} from "@mantine/core";
 import api from "@/api";
-import YouNongPaiInfo from "@/you_nong_pai/info";
+import YouNongPaiInfo from "@/ynp/info";
 
 
 export default function YouNongPaiToken() {
@@ -11,13 +11,13 @@ export default function YouNongPaiToken() {
   const [value, setValue] = React.useState('');
 
   React.useEffect(() => {
-    api.youNongPaiTokens().then(data => {
-      setTokens((data.data || []).map(token => ({
+    api.ynp.tokens().then(({data}) => {
+      setTokens((data??[]).map(token => ({
         label: token.name,
-        value: token.token
+        value: token.token,
       })));
-      data.data?.length && setValue(data.data[0].token);
-    })
+      data?.length && setValue(data[0].token);
+    });
   }, [])
   return (
     <>
