@@ -13,7 +13,6 @@ const fetcher = (uri: string, data: {[key: string]: any} = {}) => {
             'Content-Type': 'application/x-www-form-urlencoded',
             accessToken: data['accessToken'],
         };
-        console.log({uri, headers, data})
         return new Promise<any>(async (resolve, reject) => {
             const response = await fetch(`https://wcxapi.gxwcx.com/apiWxStore/v2/${uri}`, {
                 method: 'POST', 

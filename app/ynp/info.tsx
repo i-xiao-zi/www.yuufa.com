@@ -125,40 +125,48 @@ export default function YouNongPaiInfo(props: Props) {
                     <div></div>
                   </Switch.Case>
                   <Switch.Case case='TASK_SIGN'>
-                    <div>
-                      <span>{task.taskName} ({growthInfo?.isSign}/1)</span>
-                      <span className="text-sm text-gray-500">{task.taskDes}</span>
-                    </div>
-                    <div>
-                      <Button size="xs" disabled={!!growthInfo?.isSign}  onClick={() => api.ynp.sign(props.token.value)}>{!!growthInfo?.isSign ? '已完成' : '去完成'}</Button>
-                    </div>
+                    <>
+                      <div>
+                        <span>{task.taskName} ({growthInfo?.isSign}/1)</span>
+                        <span className="text-sm text-gray-500">{task.taskDes}</span>
+                      </div>
+                      <div>
+                        <Button size="xs" disabled={!!growthInfo?.isSign}  onClick={() => api.ynp.sign(props.token.value)}>{!!growthInfo?.isSign ? '已完成' : '去完成'}</Button>
+                      </div>
+                    </>
                   </Switch.Case>
                   <Switch.Case case='TASK_MALL'>
-                    <div>
-                      <span>{task.taskName} ({task.finishTimes}/{task.allTimes})</span>
-                      <span className="text-sm text-gray-500">{task.taskDes}</span>
-                    </div>
-                    <div>
-                      <Button size="xs" disabled={!!task.isFinish} onClick={() => api.ynp.view(props.token.value, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
-                    </div>
+                    <>
+                      <div>
+                        <span>{task.taskName} ({task.finishTimes}/{task.allTimes})</span>
+                        <span className="text-sm text-gray-500">{task.taskDes}</span>
+                      </div>
+                      <div>
+                        <Button size="xs" disabled={!!task.isFinish} onClick={() => api.ynp.view(props.token.value, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
+                      </div>
+                    </>
                   </Switch.Case>
                   <Switch.Case case='TASK_GET_BT'>
-                    <div>
-                      <span>{task.taskName} ({task.isFinish}/1)</span>
-                      <span className="text-sm text-gray-500">{task.taskDes}</span>
-                    </div>
-                    <div>
-                      <Button size="xs" disabled={!!task.isFinish}  onClick={() => api.ynp.sign(props.token.value)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
-                    </div>
+                    <>
+                      <div>
+                        <span>{task.taskName} ({task.isFinish}/1)</span>
+                        <span className="text-sm text-gray-500">{task.taskDes}</span>
+                      </div>
+                      <div>
+                        <Button size="xs" disabled={!!task.isFinish}  onClick={() => api.ynp.draw(props.token.value)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
+                      </div>
+                    </>
                   </Switch.Case>
                   <Switch.Case case='TASK_SHARE'>
-                    <div>
-                      <span>{task.taskName} ({task.finishTimes}/{task.allTimes})</span>
-                      <span className="text-sm text-gray-500">{task.taskDes}</span>
-                    </div>
-                    <div>
-                      <Button size="xs" disabled={!!task.isFinish}  onClick={() => api.ynp.share(props.token.value, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
-                    </div>
+                    <>
+                      <div>
+                        <span>{task.taskName} ({task.finishTimes}/{task.allTimes})</span>
+                        <span className="text-sm text-gray-500">{task.taskDes}</span>
+                      </div>
+                      <div>
+                        <Button size="xs" disabled={!!task.isFinish}  onClick={() => api.ynp.share(props.token.value, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>{!!task.isFinish ? '已完成' : '去完成'}</Button>
+                      </div>
+                    </>
                   </Switch.Case>
                   <Switch.Case case='TASK_INVITE'>
                     <div className="line-through">
