@@ -31,11 +31,11 @@ export default function Layout({children}: React.PropsWithChildren){
                 <div className="container mx-auto flex justify-between items-center">
                   <div className="flex items-center whitespace-nowrap">
                     <NavLink href="/" label="首页" active={pathname == "/"} variant="filled" />
-                    <NavLink href="/note" label="Note" active={pathname.startsWith("/note")} variant="filled" />
-                    <NavLink href="/ynp" label="优农派" active={pathname.startsWith("/ynp")} variant="filled" />
+                    <NavLink href="/note" label="Note" active={pathname?.startsWith("/note")} variant="filled" />
+                    <NavLink href="/ynp" label="优农派" active={pathname?.startsWith("/ynp")} variant="filled" />
                     <Menu shadow="md" width={200}>
                       <Menu.Target>
-                        <NavLink label="我的" className="hidden" active={pathname.startsWith("/mine")} variant="filled" />
+                        <NavLink label="我的" className="hidden" active={pathname?.startsWith("/mine")} variant="filled" />
                       </Menu.Target>
                       <Menu.Dropdown>
                         <Menu.Item component="a" href="/ynp">优农派</Menu.Item>
