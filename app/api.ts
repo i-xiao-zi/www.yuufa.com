@@ -159,6 +159,7 @@ export default {
     videoDetail: (id: number) => http.get<Video>(`/video/video/${id}`),
     ynp: {
         tokens: () => supabase.from('younongpais').select('*'),
+        token: (id: number, token: string) => supabase.from('younongpais').update({token}).eq('id', id),
         user: (token: string) => YNP.userInfo(token),
         tasks: (token: string) => YNP.growthTask(token),
         drawInfo: (token: string) => YNP.findUserBalance(token),

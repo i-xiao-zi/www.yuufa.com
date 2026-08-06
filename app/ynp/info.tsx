@@ -28,25 +28,22 @@ export default function YouNongPaiInfo(props: Props) {
   const input = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
     api.ynp.user(props.token.value).then(setUser);
-    api.ynp.tasks(props.token.value).then(setTasks);
+    api.ynp.tasks(props.token.value).then(v => setTasks(v??[]));
     api.ynp.drawInfo(props.token.value).then(setDrawInfo);
-    api.ynp.drawLogs(props.token.value).then(setDrawLogs);
+    api.ynp.drawLogs(props.token.value).then(v => setDrawLogs(v??[]));
     api.ynp.growthInfo(props.token.value).then(setGrowthInfo);
-    api.ynp.growthLogs(props.token.value).then(setGrowthLogs);
+    api.ynp.growthLogs(props.token.value).then(v => setGrowthLogs(v??[]));
     api.ynp.zhunongInfo(props.token.value).then(setZhunongInfo);
-    api.ynp.zhunongLogs(props.token.value).then(setZhunongLogs);
+    api.ynp.zhunongLogs(props.token.value).then(v => setZhunongLogs(v??[]));
   }, [props.token]);
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.token.value = e.target.value;
   }
-  const edit = () => {
-    console.log(input.current?.value);
-  }
   return (
     <div className={`${props.className || ''} ${props.active ? '' : 'hidden'}`}>
       <div className="flex mb-5">
-        <Input className="flex-auto" ref={input} value={props.token.value} onChange={change} />
-        <Button onClick={edit}>修改</Button>
+        <Input className="flex-auto" ref={input} defaultValue={props.token.value} onChange={change} />
+        <Button onClick={_ => api.ynp.token(1, input.current?.value!).then(_=>location.reload())} disabled={!input.current?.value}>修改</Button>
       </div>
       <div className="flex max-md:flex-col">
         <div className="w-[600] max-md:w-full">
