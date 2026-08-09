@@ -50,7 +50,6 @@ export default function YouNongPaiInfo(props: Props) {
           <div className="w-full flex items-center">
             <Avatar src={user?.header} size="lg" alt={user?.nickName} />
             <span>{user?.nickName}</span>
-            <span>{drawInfo?.balance}/{drawInfo?.totalBalance}</span>
           </div>
           <div className="flex content-between">
             <div className="w-full flex flex-col justify-center items-center">
