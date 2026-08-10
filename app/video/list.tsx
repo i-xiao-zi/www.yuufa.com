@@ -6,12 +6,12 @@ import useVideoStore, {} from "@/store/video"
 import {  Tables } from "@/supabase";
 
 export default function VideoList() {
-  const {search, page, size, setPage} = useVideoStore();
+  const {init, setPage} = useVideoStore();
   const [videoList, setVideoList] = React.useState<Paginate<Tables<'videos'>[]>>({page: 1, size: 10, count: 0, total: 0, data: []});
 
   React.useEffect(()=>{
-    api.video.list({search: search, page: page, size: size}).then(setVideoList);
     useVideoStore.subscribe((state) => api.video.list({search: state.search, page: state.page, size: state.size}).then(setVideoList));
+    init();
   }, []);
 
   return (

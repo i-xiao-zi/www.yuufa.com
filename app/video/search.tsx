@@ -5,7 +5,7 @@ import { IconSearch } from "@tabler/icons-react";
 import useVideoStore from "@/store/video";
 
 export default function VideoSearch() {
-  const {page, size, setSearch} = useVideoStore();
+  const {setSearch} = useVideoStore();
   const search = React.useRef('');
   return (
     <div className="flex mx-auto">

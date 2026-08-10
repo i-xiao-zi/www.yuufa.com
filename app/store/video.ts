@@ -7,6 +7,7 @@ interface VideoStore {
   setSearch: (search: string) => void;
   setPage: (page: number) => void;
   setSize: (size: number) => void;
+  init: () => void;
 }
 
 const useVideoStore = create<VideoStore>((set) => ({
@@ -16,5 +17,6 @@ const useVideoStore = create<VideoStore>((set) => ({
   setSearch: (search: string) => set(() => ({search})),
   setPage: (page: number) => set(() => ({page})),
   setSize: (size: number) => set(() => ({size})),
+  init:() => set(() => ({page: 1, size: 20, search: ''})),
 }));
 export default useVideoStore;
