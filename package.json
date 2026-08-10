@@ -39,7 +39,7 @@
     "@supabase/supabase-js": "^2.111.0",
     "@tabler/icons-react": "^3.36.1",
     "@types/lodash": "^4.17.23",
-    "@videojs/react": "^10.0.0-beta.23",
+    "@videojs/react": "^10.0.0-beta.26",
     "axios": "^1.13.4",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",

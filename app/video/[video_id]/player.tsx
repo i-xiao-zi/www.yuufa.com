@@ -2,7 +2,7 @@
 import React from "react";
 import { createPlayer } from '@videojs/react';
 import { VideoSkin, Video, videoFeatures } from '@videojs/react/video';
-import { HlsVideo } from '@videojs/react/media/hls-video';
+import { HlsJsVideo } from '@videojs/react/media/hlsjs-video';
 import '@videojs/react/video/skin.css';
 import { Button, SimpleGrid } from "@mantine/core";
 
@@ -29,7 +29,7 @@ export default function VideoPlayer({urls}: {urls: string}){
     <div className="flex">
       <Player.Provider>
         <VideoSkin className="rounded-none">
-          {link && <HlsVideo src={link.url} className="h-600" playsInline />}
+          {link && <HlsJsVideo src={link.url} className="h-600" playsInline />}
         </VideoSkin>
       </Player.Provider>
       <SimpleGrid cols={2} w={300}>
