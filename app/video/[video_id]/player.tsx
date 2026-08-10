@@ -29,9 +29,7 @@ export default function VideoPlayer({urls}: {urls: string}){
     <div className="flex">
       <Player.Provider>
         <VideoSkin className="rounded-none">
-          {link && (
-            <HlsVideo src={link.url} className="h-600" playsInline />
-          )}
+          {link && <HlsVideo src={link.url} className="h-600" playsInline />}
         </VideoSkin>
       </Player.Provider>
       <SimpleGrid cols={2} w={300}>
