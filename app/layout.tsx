@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu } from "@mantine/core";
+import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space } from "@mantine/core";
 import { ContextMenuProvider } from "mantine-contextmenu";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import {usePathname} from "next/navigation";
@@ -12,6 +12,7 @@ import "@/globals.css";
 import config from "@/config";
 import '@mantine/core/styles.layer.css';
 import 'mantine-contextmenu/styles.layer.css';
+import VideoSearch from "./video/search";
 
 export default function Layout({children}: React.PropsWithChildren){
   const pathname = usePathname();
@@ -32,6 +33,7 @@ export default function Layout({children}: React.PropsWithChildren){
                   <div className="flex items-center whitespace-nowrap">
                     <NavLink href="/" label="首页" active={pathname == "/"} variant="filled" />
                     <NavLink href="/note" label="Note" active={pathname?.startsWith("/note")} variant="filled" />
+                    <NavLink href="/video" label="影视" active={pathname?.startsWith("/video")} variant="filled" />
                     <NavLink href="/ynp" label="优农派" active={pathname?.startsWith("/ynp")} variant="filled" />
                     <Menu shadow="md" width={200}>
                       <Menu.Target>
@@ -44,6 +46,8 @@ export default function Layout({children}: React.PropsWithChildren){
                   </div>
                   <div className="flex-auto"></div>
                   <div className="flex items-center">
+                  { pathname?.startsWith('/video') && <VideoSearch/> }
+                    <Space w="md" />
                     <Scheme />
                   </div>
                 </div>

@@ -1,7 +1,6 @@
 import axios from "@/axios";
 import { createClient } from '@supabase/supabase-js';
 import * as http from "@/http";
-import { Paginate, Video, VideoOrigin } from "./api.t";
 import YNP from "./ynp.api";
 import { Database } from "./supabase";
 
@@ -34,132 +33,48 @@ export interface NoteCategory {
     children?: NoteCategory[];
     contents?: NoteContent[];
 }
-export interface YouNongPaiToken {
-    id: number;
-    name: string;
-    token: string;
-}
 
-export interface YouNongPaiUser {
-    nickName: string;
-    userName: string;
-    header: string;
-    gender: number;
-    birthday: number;
-    phone: string;
-    inviteName: string;
-    verifyState: number;
-    memberType: number;
-    isOfficial: number;
-    userId: number;
-    referrerId: number;
-    wechatNo: string;
-    qrcode: string;
-    selectPhone: null | string;
-    createTime: number;
-    unionName: string;
-    unionPhone: string;
-    areaServName: string;
-    areaServPhone: string;
-    isSetPayPwd: number; // 0 表示未设置支付密码
-}
-export interface YouNongPaiDrawInfo {
-    balance: number;
-    freezeBalance: number;
-    totalBalance: number;
-    tocUsedBalance: number;
-    getCashImg: string;
-}
-export interface YouNongPaiDrawLog {
-    logId: number;
-    fromLogId: number;
-    des: string;
-    userId: number;
-    hideLog: number;
-    bizId: number;
-    bizParam: string;
-    amount: number;
-    fromUser: number;
-    inOutState: number;
-    inOutType: number;
-    inOutProp: number;
-    createTime: number;
-    productTime: number;
-}
-export interface YouNongPaiGrowthInfo {
-    growth: number;
-    allGrowth: number;
-    isSign: number;
-}
-export interface YouNongPaiGrowthLog {
-    growthId: number;
-    userId: number;
-    growthType: number;
-    typeName: string;
-    growthProp: number;
-    createTime: number;
-    dateYmd: string;
-    growth: number;
-    bizId: number;
-    userName: null | string;
-    headUrl: null | string;
-    phone: null | string;
-    growth1: null | number;
-    growth2: null | number;
-    beginTime: null | number;
-    endTime: null | number;
-    isSystem: null | number;
-
-}
-export interface YouNongPaiTask {
-    taskType: string;
-    taskName: string;
-    taskDes: string;
-    isFinish: number;
-    finishTimes: number;
-    allTimes: number;
-    growth: number;
-    maxGrowth: number;
-}
-export interface YouNongPai {
-    user: YouNongPaiUser;
-    tasks: YouNongPaiTask[],
-}
-
-export interface YouNongPaiDraw {
-    info: YouNongPaiDrawInfo;
-    logs: YouNongPaiDrawLog[];
-}
-export interface YouNongPaiGrowth {
-    info: YouNongPaiGrowthInfo,
-    logs: YouNongPaiGrowthLog[],
-}
-export interface YouNongPaiZhunong {
-    info: any,
-    logs: any[],
+export interface Paginate<T=any> {
+    data: T;
+    page: number;
+    count: number;
+    total: number;
+    size: number;
 }
 
 export const supabase = createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!);
 
 export default {
     searchor: () => http.get<SearchorType[]>('/searchor'),
-    note: () => axios.get<NoteCategory[]>('/note'),
+    note: {
+        list: async () => await supabase.from('note_categories').select('*').order('sort'),
+    },
     noteContent: (id: number) => axios.get<NoteContent>(`/note/content/${id}`),
     noteContentCreate: (data: Partial<NoteContent>) => axios.post<NoteContent[]>(`/note/content`, data),
     noteContentUpdate: (id: number, data: Partial<NoteContent>) => axios.post<NoteContent[]>(`/note/content/${id}`, data),
-    youNongPaiTokens: () => axios.get<YouNongPaiToken[]>('/you_nong_pai/tokens'),
-    youNongPai: (token: string) => axios.post<YouNongPai>('/you_nong_pai', { token }),
-    youNongPaiDraw: (token: string) => axios.get<YouNongPaiDraw>(`/you_nong_pai/draw?token=${token}`),
-    youNongPaiGrowth: (token: string) => axios.get<YouNongPaiGrowth>(`/you_nong_pai/growth?token=${token}`),
-    youNongPaiZhunong: (token: string) => axios.get<YouNongPaiZhunong>(`/you_nong_pai/zhunong?token=${token}`),
-    youNongPaiTask: (token: string, name: string) => http.post<YouNongPaiTask[]>('/you_nong_pai/task', { token, name }),
-    videoOrigin: () => http.get<VideoOrigin[]>('/video/origin'),
-    videoOriginDetail: (id: number) => http.get<VideoOrigin>(`/video/origin/${id}`),
-    videoList: ({video_name, origin_id, page, size}: {video_name?:string, origin_id?: number, page?: number, size?: number}) => http.get<Paginate<Video[]>>(`/video?video_name=${video_name || ''}&origin_id=${origin_id || ''}&page=${page || ''}&size=${size || ''}`),
-    videoDetail: (id: number) => http.get<Video>(`/video/video/${id}`),
+    video: {
+        origin_list: async () => await supabase.from('video_origins').select('*').order('id'),
+        origin_info: async (id: number) => await supabase.from('video_origins').select('*').eq('id', id).maybeSingle(),
+        origin_active: () => supabase.from('video_origins').select('*').eq('active', true).maybeSingle(),
+        list: async ({search, size = 10, page = 1}: {search?: string, size?: number, page?: number}) => {
+            let query = supabase.from('videos').select('*', {count: 'exact'});
+            if (search) {
+                query = query.like('name', `%${search}%`);
+            }
+            const data = await query.range(size*(page-1), size*page - 1);
+            return {
+                page: page,
+                total: Math.ceil((data.count ?? 0)/size),
+                count: data.count ?? 0,
+                data: data.data ?? [],
+                size: size
+            };
+        },
+        info: (video_id: number) => supabase.from('videos').select('*').eq('id', video_id).maybeSingle(),
+    },
     ynp: {
-        tokens: () => supabase.from('younongpais').select('*'),
-        token: (id: number, token: string) => supabase.from('younongpais').update({token}).eq('id', id),
+        tokens: async () => await supabase.from('younongpais').select('*'),
+        token: async (id: number, token: string) => await supabase.from('younongpais').update({token}).eq('id', id),
         user: (token: string) => YNP.userInfo(token),
         tasks: (token: string) => YNP.growthTask(token),
         drawInfo: (token: string) => YNP.findUserBalance(token),
