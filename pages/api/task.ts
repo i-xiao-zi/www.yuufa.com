@@ -10,9 +10,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<any[]>) => {
     const info: YNP.ZhunongInfo = await api.ynp.zhunongInfo(token.token);
     const draw = await api.ynp.draw(token.token);
     const sign = await api.ynp.sign(token.token);
-    let id = info.recommendProducts[Math.floor(Math.random() * info.recommendProducts.length)].productMainId ?? Math.ceil(Math.random() * 100);
+    let id = info.recommendProducts[Math.floor(Math.random() * info.recommendProducts.length)]?.productMainId ?? Math.ceil(Math.random() * 100);
     const view = await api.ynp.view(token.token, id);
-    id = info.recommendProducts[Math.floor(Math.random() * info.recommendProducts.length)].productMainId ?? Math.ceil(Math.random() * 100);
+    id = info.recommendProducts[Math.floor(Math.random() * info.recommendProducts.length)]?.productMainId ?? Math.ceil(Math.random() * 100);
     const share = await api.ynp.share(token.token, id);
     rtn.push({draw, sign, view, share});
   }
