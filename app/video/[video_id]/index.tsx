@@ -14,14 +14,14 @@ export default async function Page({params}: Params) {
 
   return (
     <main className="container mx-auto flex-auto z-1">
-      <Container size="lg">
+      <Container size="xl">
         <Breadcrumbs className="my-3">
           <Anchor href="/">首页</Anchor>
           <Anchor href={`/video/`}>影视</Anchor>
           <Anchor>{video?.name}</Anchor>
         </Breadcrumbs>
       </Container>
-      <Container size="lg">
+      <Container size="xl">
         <Typography component="h1">{video?.name}</Typography>
         {video && <VideoPlayer urls={video.urls} />}
       </Container>

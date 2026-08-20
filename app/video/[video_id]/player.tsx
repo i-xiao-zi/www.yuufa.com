@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
+import { Button, Flex, SimpleGrid } from "@mantine/core";
 import { createPlayer } from '@videojs/react';
 import { VideoSkin, Video, videoFeatures } from '@videojs/react/video';
 import { HlsJsVideo } from '@videojs/react/media/hlsjs-video';
 import '@videojs/react/video/skin.css';
-import { Button, SimpleGrid } from "@mantine/core";
 
 interface Link {
   title: string;
@@ -26,7 +26,7 @@ export default function VideoPlayer({urls}: {urls: string}){
   }, []);
 
   return (
-    <div className="flex">
+    <Flex className="flex">
       <Player.Provider>
         <VideoSkin className="rounded-none">
           {link && <HlsJsVideo src={link.url} className="h-600" playsInline />}
@@ -37,6 +37,6 @@ export default function VideoPlayer({urls}: {urls: string}){
           return (<Button key={index} onClick={() => setLink(link)}>{link.title}</Button>)
         })}
       </SimpleGrid>
-    </div>
+    </Flex>
   )
 }
