@@ -27,11 +27,11 @@ export default function VideoPlayer({urls}: {urls: string}){
 
   return (
     <Flex className="flex">
-      <Player.Provider>
+      <Player.Player>
         <VideoSkin className="rounded-none">
           {link && <HlsJsVideo src={link.url} className="h-600" playsInline />}
         </VideoSkin>
-      </Player.Provider>
+      </Player.Player>
       <SimpleGrid cols={2} w={300}>
         {links.map((link,index) => {
           return (<Button key={index} onClick={() => setLink(link)}>{link.title}</Button>)
