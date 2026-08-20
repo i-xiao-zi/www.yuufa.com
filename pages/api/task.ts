@@ -1,5 +1,5 @@
 import api from "@/api";
-import YNP from "@/ynp.api";
+import YNP from "@/api/ynp";
 import { NextApiRequest, NextApiResponse } from "next";
 
 

@@ -1,15 +1,9 @@
 import {Metadata} from "next";
-import VideoList from "./list";
+import Page from "./";
 
 export const metadata: Metadata = {
   title: "影视",
   description: "影视",
 };
 
-export default async function VideoPage() {
-  return (
-    <main className="container mx-auto flex-auto z-1">
-      <VideoList />
-    </main>
-  )
-}
+export default () => (<Page/>)

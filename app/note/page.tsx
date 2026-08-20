@@ -24,7 +24,7 @@ export default async function NotePage() {
     }))
   return (
     <div id="note-page" className="container flex-auto mx-auto flex max-sm:flex-col">
-      <aside className="w-[300px] max-sm:w-full">
+      <aside className="w-75 max-sm:w-full">
         <Tree
           data={parseTree(tree.data || [])}
           levelOffset={23}

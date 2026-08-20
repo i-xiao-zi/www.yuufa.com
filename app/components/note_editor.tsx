@@ -65,18 +65,18 @@ export default function NoteEditor() {
   }, []);
   const onSave = () => {
     setSaving(true);
-    api.noteContentUpdate(id!, content).finally(()=>setSaving(false))
+    // api.note.contentUpdate(id!, content).finally(()=>setSaving(false))
   }
   React.useEffect(() => {
     if (id) {
       console.log({id});
       setWelcome(false);
       setLoading(true);
-      api.noteContent(id).then(res => {
-        setLoading(false);
-        setContent(res.data || {});
-        editor.current!.render(JSON.parse(res.data?.content || '{}'));
-      })
+      // api.noteContent(id).then(res => {
+      //   setLoading(false);
+      //   setContent(res.data || {});
+      //   editor.current!.render(JSON.parse(res.data?.content || '{}'));
+      // })
     }
   }, [id]);
   return (

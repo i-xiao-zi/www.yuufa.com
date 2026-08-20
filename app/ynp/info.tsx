@@ -9,7 +9,7 @@ import {Calendar} from "@mantine/dates";
 import _ from 'lodash';
 import { IconCircleCheck, IconCircleDashed } from "@tabler/icons-react";
 import Switch from "@/components/switch";
-import YNP from "@/ynp.api";
+import YNP from "@/api/ynp";
 
 interface Props extends HTMLAttributes<HTMLDivElement>{
   token: SegmentedControlItem;

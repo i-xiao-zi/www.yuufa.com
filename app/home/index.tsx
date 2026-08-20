@@ -1,32 +1,39 @@
 "use client";
 import React from "react";
-import {Tabs, TabsList, TabsTab, TabsPanel, Input, CloseButton, Popover, PopoverTarget, PopoverDropdown, Button, UnstyledButton, SegmentedControl, ActionIcon} from "@mantine/core";
-import {IconSearch, IconSettings} from "@tabler/icons-react";
-import api, { Searchor, SearchorType } from "@/api";
-import config from "@/config";
+import { ActionIcon, CloseButton, Input, Popover, PopoverDropdown, PopoverTarget, SegmentedControl, Tabs, TabsList, TabsPanel, TabsTab } from "@mantine/core";
+import { IconSearch, IconSettings } from "@tabler/icons-react";
 import _ from "lodash";
+import ContextMenu from "../components/cm";
+import { Searchor } from "@/api/types";
+import api from "@/api";
 
-
-export default function HomePageTabs() {
-  const [tabs, setTabs] = React.useState<SearchorType[]>([]);
-  const [tab, setTab] = React.useState<SearchorType|undefined>();
-  const [segmente, setSegmente] = React.useState<Searchor|undefined>();
+export default function Page() {
+  const [tabs, setTabs] = React.useState<Searchor.Item[]>([]);
+  const [tab, setTab] = React.useState<Searchor.Item>();
+  const [segmente, setSegmente] = React.useState<Searchor.Detail>();
   const [value, setValue] = React.useState<string>('');
   const onSearch = () => {
     segmente && window.open(segmente?.value.replace('%s', value), '_blank');
     setValue('');
   }
   React.useEffect(() => {
-    api.searchor().then(v=>{setTabs(v.data);setTab(v.data[0]); setSegmente(v[0]?.searchors?.[0])});
+    api.searchor.list().then(v=>{
+      setTabs(v);
+      if(v.length > 0) setTab(v[0]);
+    });
   }, []);
+  React.useEffect(() => {
+    setSegmente(tab?.searchors?.[0]);
+  }, [tab]);
   return (
-    <Tabs 
-      className="w-3xl mt-5 mx-auto" 
-      variant="outline" 
-      color="teal" 
-      value={tab?.name}
-      onChange={v => v && setTab(_.find(tabs, {name: v}))}
-    >
+    <main className="container mx-auto flex-auto z-1">
+      <Tabs
+        className="w-3xl mt-5 mx-auto" 
+        variant="outline" 
+        color="teal"
+        value={tab?.name}
+        onChange={v => setTab(tabs.find(i => i.name == v))}
+      >
         <TabsList>
           {tabs.map(item => <TabsTab key={item.id} value={item.name}>{item.name}</TabsTab>)}
           <ActionIcon className="absolute! right-0" variant="subtle"><IconSettings /></ActionIcon>
@@ -51,7 +58,7 @@ export default function HomePageTabs() {
                   <Popover position="bottom-end" withArrow shadow="md">
                     <PopoverTarget>
                       <ActionIcon className="self-stretch flex-auto h-[unset]! active:transform-none!">
-                        <img src={`${config.base_storage}/${segmente?.icon}`} />
+                        <img src={`${process.env.NEXT_PUBLIC_BASE_STORAGE}/${segmente?.icon}`} />
                       </ActionIcon>
                     </PopoverTarget>
                     <PopoverDropdown className="p-0!">
@@ -59,7 +66,7 @@ export default function HomePageTabs() {
                         value={segmente?.name}
                         data={(item.searchors || []).map(searchor => ({
                           value: searchor.name,
-                          label: <img key={searchor.id} src={`${config.base_storage}/${searchor.icon}`} />,
+                          label: <img key={searchor.id} src={`${process.env.NEXT_PUBLIC_BASE_STORAGE}/${searchor.icon}`} />,
                         }))}
                         onChange={v => setSegmente(_.find(item.searchors || [], {name: v}) || undefined)}
                       />
@@ -68,7 +75,7 @@ export default function HomePageTabs() {
                 }
                 rightSection={<>
                     {value &&<CloseButton aria-label="Clear input" onClick={() => setValue('')} /> }
-                    <ActionIcon className="self-stretch flex-auto h-[unset]! w-[48px]!" onClick={onSearch}><IconSearch size={25} /></ActionIcon>
+                    <ActionIcon className="self-stretch flex-auto h-[unset]! w-12!" onClick={onSearch}><IconSearch size={25} /></ActionIcon>
                 </>}
                 />
             </TabsPanel>
@@ -79,5 +86,8 @@ export default function HomePageTabs() {
           override context value
         </TabsPanel>
       </Tabs>
+      <hr />
+      <ContextMenu>xxx</ContextMenu>
+    </main>
   );
 }

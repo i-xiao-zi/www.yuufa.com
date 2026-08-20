@@ -6,26 +6,26 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const fetcher = (uri: string, data: {[key: string]: any} = {}) => {
-        const headers = {
-            'o': 'oUe5g7FGLV9frAZ_uYKandx_5V80',
-            'apiFrom': 'WXMA',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090c33)XWEB/13639',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            accessToken: data['accessToken'],
-        };
-        return new Promise<any>(async (resolve, reject) => {
-            const response = await fetch(`https://wcxapi.gxwcx.com/apiWxStore/v2/${uri}`, {
-                method: 'POST', 
-                headers: headers, 
-                body: qs.stringify(data),
-            });
-            if (response.ok) {
-                const json = await response.json()
-                resolve(json.data)
-            }
-            resolve({})
-        })
+  const headers = {
+    'o': 'oUe5g7FGLV9frAZ_uYKandx_5V80',
+    'apiFrom': 'WXMA',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090c33)XWEB/13639',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    accessToken: data['accessToken'],
+  };
+  return new Promise<any>(async (resolve, reject) => {
+    const response = await fetch(`https://wcxapi.gxwcx.com/apiWxStore/v2/${uri}`, {
+      method: 'POST', 
+      headers: headers, 
+      body: qs.stringify(data),
+    });
+    if (response.ok) {
+      const json = await response.json()
+      resolve(json.data)
     }
+    resolve({})
+  })
+}
 
 namespace YNP {
 
