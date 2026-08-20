@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Pagination, Text, Image, Card } from '@mantine/core';
+import { Pagination, Text, Image, Card, Container, Grid } from '@mantine/core';
 import api, { Paginate } from "@/api";
 import useVideoStore, {} from "@/store/video"
 import { Tables } from "@/api/supabase";
@@ -15,21 +15,25 @@ export default function Page() {
   }, []);
   return (
       <main className="container mx-auto flex-auto z-1">
-        <div className="container mx-auto flex-auto z-1 my-5">
-          <div className="grid grid-cols-4 lg:grid-cols-6 md:grid-cols-5 xl:grid-cols-8 gap-5">
+        <Container size="lg">
+          <Grid>
             {videoList.data.map((item, index) => (
-              <Card key={index} component="a" href={`/video/${item.id}`}>
-                <Card.Section>
-                  <Image radius="md" src={`${item.pic}`}/>
-                </Card.Section>
-                <Text size="sm" ta="center">
-                  {item.name}
-                </Text>
-              </Card>
+              <Grid.Col key={index} span={{base: 4, md:3, lg: 5}}>
+                <Card component="a" href={`/video/${item.id}`} target="_blank">
+                  <Card.Section>
+                    <Image radius="md" src={`${item.pic}`}/>
+                  </Card.Section>
+                  <Text size="sm" ta="center">
+                    {item.name}
+                  </Text>
+                </Card>
+              </Grid.Col>
             ))}
-          </div>
+          </Grid>
+        </Container>
+        <Container size="lg">
           <Pagination classNames={{root: 'float-end'}} total={videoList.total} onChange={setPage}/>
-        </div>
+        </Container>
       </main>
     )
 }

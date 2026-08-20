@@ -9,18 +9,17 @@ import Head from "next/head";
 import Scheme from "@/scheme";
 import theme from "@/theme";
 import "@/globals.css";
-import config from "@/config";
 import '@mantine/core/styles.layer.css';
 import 'mantine-contextmenu/styles.layer.css';
-import VideoSearch from "./video/search";
+import VideoSearch from "@/video/search";
 
 export default function Layout({children}: React.PropsWithChildren){
   const pathname = usePathname();
-  React.useEffect(() => {
-    config.is_prod && Clarity.init(config.clarity_id as string);
-  }, []);
+  if (process.env.NODE_ENV == 'production') {
+    Clarity.init(process.env.NEXT_PUBLIC_CLARITY_ID ?? '');
+  }
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="zh-Hans" {...mantineHtmlProps}>
       <Head>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
@@ -56,7 +55,7 @@ export default function Layout({children}: React.PropsWithChildren){
             {children}
           </ContextMenuProvider>
         </MantineProvider>
-        {config.is_prod && <GoogleAnalytics gaId={config.ga_id as string} />}
+        {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />}
       </body>
     </html>
   );
