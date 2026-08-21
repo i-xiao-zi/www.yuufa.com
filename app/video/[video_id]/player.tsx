@@ -26,7 +26,7 @@ export default function VideoPlayer({urls}: {urls: string}){
   }, []);
 
   return (
-    <Flex className="flex">
+    <Flex className="flex" direction={{base: 'column', md: 'row'}} gap={2}>
       <Player.Player>
         <VideoSkin className="rounded-none">
           {link && <HlsJsVideo src={link.url} className="h-600" playsInline />}

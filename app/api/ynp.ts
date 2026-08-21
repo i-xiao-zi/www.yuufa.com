@@ -28,8 +28,6 @@ const fetcher = (uri: string, data: {[key: string]: any} = {}) => {
 }
 
 namespace YNP {
-
-    
     export interface User {
         nickName: string;
         userName: string;

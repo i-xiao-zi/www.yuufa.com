@@ -8,8 +8,7 @@ interface Params {
   }>
 }
 
-export default async function Page({params}: Params) {
-  const {video_id} = await params;
+export default async function Page({video_id}: {video_id: number}) {
   const video = (await api.video.info(video_id)).data;
 
   return (

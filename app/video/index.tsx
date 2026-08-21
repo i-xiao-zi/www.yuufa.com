@@ -18,10 +18,10 @@ export default function Page() {
         <Container size="lg">
           <Grid>
             {videoList.data.map((item, index) => (
-              <Grid.Col key={index} span={{base: 4, md:3, lg: 5}}>
+              <Grid.Col key={index} span={{xs: 4, md:6, lg: 3}}>
                 <Card component="a" href={`/video/${item.id}`} target="_blank">
                   <Card.Section>
-                    <Image radius="md" src={`${item.pic}`}/>
+                    <Image src={`${item.pic}`}/>
                   </Card.Section>
                   <Text size="sm" ta="center">
                     {item.name}

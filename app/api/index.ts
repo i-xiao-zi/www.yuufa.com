@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import YNP from "./ynp";
 import { Database, Tables, TablesInsert, TablesUpdate } from "./supabase";
 import { Searchor } from "./types";
+import Cron from './cron';
 
 
 export interface Searchor {
@@ -98,5 +99,11 @@ export default {
     view: (token: string, id: number) => YNP.growthViewSign(token, id),
     sign: (token: string) => YNP.growthSignIn(token),
     share: (token: string, id: number) => YNP.growthShareProduct(token, id),
+  },
+  cron: {
+    list: () => Cron.list(),
+    get: (id: number) => Cron.get(id),
+    put: () => Cron.put(),
+    history: (id: number) => Cron.history(id),
   }
 }

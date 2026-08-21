@@ -59,10 +59,10 @@ export default function Page() {
             </Container>
             <Flex direction={{base: 'column', md: 'row'}} gap="md">
               <Box className="flex-auto max-md:w-full">
-                <Box my="md" className="w-full flex items-center">
+                <Flex my="md" bg="gray" className="items-center rounded-full">
                   <Avatar src={user?.header} size="lg" mr="md" alt={user?.nickName} />
                   <span>{user?.nickName}</span>
-                </Box>
+                </Flex>
                 <Group m="md" justify="center" grow>
                   <Card className="flex flex-col justify-center items-center">
                     <div>{drawInfo?.balance}/{drawInfo?.totalBalance}</div>

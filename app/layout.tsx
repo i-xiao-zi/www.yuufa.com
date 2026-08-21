@@ -34,6 +34,7 @@ export default function Layout({children}: React.PropsWithChildren){
                     <NavLink href="/note" label="Note" active={pathname?.startsWith("/note")} variant="filled" />
                     <NavLink href="/video" label="影视" active={pathname?.startsWith("/video")} variant="filled" />
                     <NavLink href="/ynp" label="优农派" active={pathname?.startsWith("/ynp")} variant="filled" />
+                    <NavLink href="/cron" label="任务" active={pathname?.startsWith("/cron")} variant="filled" />
                     <Menu shadow="md" width={200}>
                       <Menu.Target>
                         <NavLink label="我的" className="hidden" active={pathname?.startsWith("/mine")} variant="filled" />
