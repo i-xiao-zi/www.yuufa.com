@@ -2,7 +2,6 @@
 import React from "react";
 import { ActionIcon, CloseButton, Input, Popover, PopoverDropdown, PopoverTarget, SegmentedControl, Tabs, TabsList, TabsPanel, TabsTab } from "@mantine/core";
 import { IconSearch, IconSettings } from "@tabler/icons-react";
-import _ from "lodash";
 import ContextMenu from "../components/cm";
 import { Searchor } from "@/api/types";
 import api from "@/api";
@@ -68,7 +67,7 @@ export default function Page() {
                           value: searchor.name,
                           label: <img key={searchor.id} src={`${process.env.NEXT_PUBLIC_BASE_STORAGE}/${searchor.icon}`} />,
                         }))}
-                        onChange={v => setSegmente(_.find(item.searchors || [], {name: v}) || undefined)}
+                        onChange={v => setSegmente(item.searchors.find(i => i.name == v) || undefined)}
                       />
                     </PopoverDropdown>
                   </Popover>
