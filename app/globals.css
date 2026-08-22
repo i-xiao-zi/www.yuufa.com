@@ -12,16 +12,14 @@
 }
 @plugin "./plugin"; */
 
-
-:root[data-mantine-color-scheme='dark'], :host([data-mantine-color-scheme='dark']) {
-  --mantine-color-header: #2d3748;
-}
-:root[data-mantine-color-scheme='light'], :host([data-mantine-color-scheme='light']) {
-  --mantine-color-header: #2d3748;
+:root {
+  --container-size-xxl: calc(96rem * var(--mantine-scale));
+  --mantine-line-height-xxl: 1.7;
+  --mantine-radius-xxl: calc(5rem * var(--mantine-scale));
 }
 
 body {
-  @apply flex flex-col min-h-screen;
+  @apply flex flex-col min-h-screen items-stretch;
 }
 header {
   @apply h-[40px] bg-(--mantine-color-header);

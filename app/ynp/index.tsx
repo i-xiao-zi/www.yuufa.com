@@ -63,7 +63,7 @@ export default function Page() {
               <Box className="flex-auto max-md:w-full">
                 <Flex my="md" bg="gray" className="items-center rounded-full">
                   <Avatar src={user?.header} size="lg" mr="md" alt={user?.nickName} />
-                  <span>{user?.nickName}</span>
+                  <Typography>{user?.nickName}</Typography>
                 </Flex>
                 <Group m="md" justify="center" grow>
                   <Card className="flex flex-col justify-center items-center">

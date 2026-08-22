@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space } from "@mantine/core";
+import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space, Flex, Container, Box, Divider, Center, Typography } from "@mantine/core";
 import { ContextMenuProvider } from "mantine-contextmenu";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import {usePathname} from "next/navigation";
@@ -26,10 +26,10 @@ export default function Layout({children}: React.PropsWithChildren){
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
           <ContextMenuProvider>
-            <header>
-              <nav className="fixed top-0 right-0 w-full z-9999">
-                <div className="container mx-auto flex justify-between items-center">
-                  <div className="flex items-center whitespace-nowrap">
+            <Box component="header" h="40" mb="5">
+              <Box component="nav" bg="gray" pos="fixed" top="0" w="100%" className="z-9999">
+                <Container size="xxl" className="flex justify-between items-center">
+                  <Flex justify="center" className="whitespace-nowrap">
                     <NavLink href="/" label="首页" active={pathname == "/"} variant="filled" />
                     <NavLink href="/note" label="Note" active={pathname?.startsWith("/note")} variant="filled" />
                     <NavLink href="/video" label="影视" active={pathname?.startsWith("/video")} variant="filled" />
@@ -43,17 +43,24 @@ export default function Layout({children}: React.PropsWithChildren){
                         <Menu.Item component="a" href="/ynp">优农派</Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
-                  </div>
+                  </Flex>
                   <div className="flex-auto"></div>
                   <div className="flex items-center">
                   { pathname?.startsWith('/video') && <VideoSearch/> }
                     <Space w="md" />
                     <Scheme />
                   </div>
-                </div>
-              </nav>
-            </header>
+                </Container>
+              </Box>
+            </Box>
             {children}
+            <Box component="footer" py="15" bg="gray">
+              <Container>
+                <Center>
+                  Copyright © 2005-{(new Date()).getFullYear()} <Typography component="a" mx="5" href="https://yuufa.com">YUUFA.COM</Typography> 版权所有
+                </Center>
+              </Container>
+            </Box>
           </ContextMenuProvider>
         </MantineProvider>
         {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />}

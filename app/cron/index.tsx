@@ -41,7 +41,7 @@ export default function Page() {
   }, [history]);
   
   return (
-    <main>
+    <main className="flex-auto">
       <Modal size="lg"
         opened={Boolean(history && historys)}
         onClose={() => setHistory(null)}
