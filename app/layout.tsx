@@ -57,7 +57,7 @@ export default function Layout({children}: React.PropsWithChildren){
             <Box component="footer" py="15" bg="gray">
               <Container>
                 <Center>
-                  Copyright © 2005-{(new Date()).getFullYear()} <Typography component="a" mx="5" href="https://yuufa.com">YUUFA.COM</Typography> 版权所有
+                  Copyright © 2005-{(new Date()).getFullYear()} <a className="mx-2" href="https://yuufa.com">YUUFA.COM</a> 版权所有
                 </Center>
               </Container>
             </Box>
