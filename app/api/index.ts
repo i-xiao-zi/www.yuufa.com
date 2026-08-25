@@ -59,7 +59,7 @@ export default {
     },
   },
   note: {
-    list: () => supabase.from('note_categories').select('*').order('sort'),
+    list: () => supabase.from('note_types').select('*').order('sort'),
     content: (id: number) => supabase.from('note_contents').select('*').eq('id', id).maybeSingle(),
     contentCreate: (data: TablesInsert<'note_contents'>) => supabase.from('note_contents').insert(data),
     contentUpdate: (id: number, data: TablesUpdate<'note_contents'>) => supabase.from('note_contents').update(data).eq('id', id),

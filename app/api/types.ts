@@ -14,7 +14,7 @@ export namespace Searchor {
   export type Item = Type & { searchors: Detail[] }
 }
 export namespace Note {
-  export type Category = Tables<'note_categories'>
+  export type Type = Tables<'note_types'>
   export type Content = Tables<'note_contents'>
 }
 export namespace Video {
