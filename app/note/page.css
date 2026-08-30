@@ -1,5 +1,5 @@
 .codex-editor {
-  @apply flex-grow;
+  @apply grow;
 }
 
 .ce-block__content,

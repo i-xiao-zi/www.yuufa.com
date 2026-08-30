@@ -2,6 +2,7 @@
 import React from "react";
 import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space, Flex, Container, Box, Divider, Center, Typography } from "@mantine/core";
 import { ContextMenuProvider } from "mantine-contextmenu";
+import { Notifications } from "@mantine/notifications";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import {usePathname} from "next/navigation";
 import Clarity from "@microsoft/clarity";
@@ -25,6 +26,7 @@ export default function Layout({children}: React.PropsWithChildren){
       </Head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
+          <Notifications />
           <ContextMenuProvider>
             <Box component="header" h="40" mb="5">
               <Box component="nav" bg="gray" pos="fixed" top="0" w="100%" className="z-9999">

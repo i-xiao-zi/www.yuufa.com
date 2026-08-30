@@ -1,46 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
-import YNP from "./ynp";
+import * as ynp from "./ynp";
 import { Database, Tables, TablesInsert, TablesUpdate } from "./supabase";
-import { Searchor } from "./types";
+import { Searchor, YNP } from "./types";
 import Cron from './cron';
-
-
-export interface Searchor {
-    id: number;
-    name: string;
-    value: string;
-    icon: string;
-    sort: number;
-}
-export interface SearchorType {
-    id: number;
-    name: string;
-    sort: number;
-    searchors?: Searchor[];
-}
-export interface NoteContent {
-    id: number;
-    category_id: number;
-    title: string;
-    content: string;
-    sort: number;
-}
-export interface NoteCategory {
-    id: number;
-    parent_id: number;
-    name: string;
-    sort: number;
-    children?: NoteCategory[];
-    contents?: NoteContent[];
-}
-
-export interface Paginate<T=any> {
-    data: T;
-    page: number;
-    count: number;
-    total: number;
-    size: number;
-}
 
 export const supabase = createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!);
 
@@ -85,20 +47,25 @@ export default {
     info: (video_id: number) => supabase.from('videos').select('*').eq('id', video_id).maybeSingle(),
   },
   ynp: {
+    login: (phone: string, pwd: string): Promise<YNP.User> => ynp.login(phone, pwd),
     tokens: () => supabase.from('younongpais').select('*'),
+    addAccount: (name: string, phone: string, pwd: string) => supabase.from('younongpais').insert({name, phone, pwd}),
     token: (id: number, token: string) => supabase.from('younongpais').update({token}).eq('id', id),
-    user: (token: string) => YNP.userInfo(token),
-    tasks: (token: string) => YNP.growthTask(token),
-    drawInfo: (token: string) => YNP.findUserBalance(token),
-    drawLogs: (token: string) => YNP.findMoneyLogs(token),
-    growthInfo: (token: string) => YNP.growthInfo(token),
-    growthLogs: (token: string) => YNP.growthLogs(token),
-    zhunongInfo: (token: string) => YNP.zhunongInfo(token),
-    zhunongLogs: (token: string) => YNP.zhunongLogs(token),
-    draw: (token: string) => YNP.startDraw(token),
-    view: (token: string, id: number) => YNP.growthViewSign(token, id),
-    sign: (token: string) => YNP.growthSignIn(token),
-    share: (token: string, id: number) => YNP.growthShareProduct(token, id),
+    user: (token: string) => ynp.userInfo(token),
+    tasks: (token: string) => ynp.growthTask(token),
+    drawInfo: (token: string) => ynp.findUserBalance(token),
+    drawLogs: (token: string) => ynp.findMoneyLogs(token),
+    growthInfo: (token: string) => ynp.growthInfo(token),
+    growthLogs: (token: string) => ynp.growthLogs(token),
+    zhunongInfo: (token: string) => ynp.zhunongInfo(token),
+    zhunongLogs: (token: string) => ynp.zhunongLogs(token),
+    draw: (token: string) => ynp.startDraw(token),
+    view: (token: string, id: number) => ynp.growthViewSign(token, id),
+    sign: (token: string) => ynp.growthSignIn(token),
+    share: (token: string, id: number) => ynp.growthShareProduct(token, id),
+    integral: (token: string) => ynp.integral(token),
+    couponInfo: (token: string): Promise<YNP.CouponInfo> => ynp.couponInfo(token),
+    couponLogs: (token: string): Promise<YNP.CouponLog[]> => ynp.couponLogs(token),
   },
   cron: {
     list: () => Cron.list(),
