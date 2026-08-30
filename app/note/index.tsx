@@ -6,7 +6,7 @@ import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from "@tiptap/starter-kit";
 import "./page.css";
-import api, { NoteCategory } from "@/api";
+import api from "@/api";
 import { Note } from "@/api/types";
 import { IconChevronRight, IconEdit, IconFile, IconFilePlus, IconFolder, IconFolderPlus, IconPointFilled, IconTrash } from "@tabler/icons-react";
 import '@mantine/tiptap/styles.css';
@@ -38,7 +38,7 @@ export default function Page() {
         if(data) {
           setContent(data);
           console.log(data.content);
-          editor.commands.setContent(data.content)
+          editor?.commands.setContent(data.content)
           setContent(data);
         }
       });
