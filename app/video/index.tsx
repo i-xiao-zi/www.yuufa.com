@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import { Pagination, Text, Image, Card, Container, Grid } from '@mantine/core';
-import api, { Paginate } from "@/api";
+import api from "@/api";
 import useVideoStore, {} from "@/store/video"
 import { Tables } from "@/api/supabase";
+import { Paginate } from "@/api/types";
 
 export default function Page() {
   const {init, setPage} = useVideoStore();
