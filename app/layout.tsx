@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space, Flex, Container, Box, Divider, Center, Typography } from "@mantine/core";
+import {ColorSchemeScript, mantineHtmlProps, MantineProvider, NavLink, Menu, Space, Flex, Container, Box, Center } from "@mantine/core";
+import { Analytics } from '@vercel/analytics/next';
 import { ContextMenuProvider } from "mantine-contextmenu";
 import { Notifications } from "@mantine/notifications";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -66,10 +67,8 @@ export default function Layout({children}: React.PropsWithChildren){
           </ContextMenuProvider>
         </MantineProvider>
         {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />}
-        {process.env.NODE_ENV == 'production' && (
-          <script src="https://hm.baidu.com/hm.js?cc189cabf6589293ddbcb5f8ee51c338" />
-        )}
-
+        {process.env.NODE_ENV == 'production' && <script src="https://hm.baidu.com/hm.js?cc189cabf6589293ddbcb5f8ee51c338" />}
+        {process.env.NODE_ENV == 'production' && <Analytics />}
       </body>
     </html>
   );
