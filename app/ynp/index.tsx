@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Avatar, Box, Button, Card, Container, Flex, Group, Input, List, Loader, Menu, Modal, Popover, SegmentedControl, Table, ThemeIcon, Typography, UnstyledButton} from "@mantine/core";
+import { Avatar, Box, Button, Card, Center, Container, Flex, Group, Input, List, Loader, Menu, Modal, Popover, SegmentedControl, Table, ThemeIcon, Typography, UnstyledButton} from "@mantine/core";
 import { IconCircleCheck, IconCircleDashed, IconDotsVertical, IconPlus, IconRestore, IconTrash } from "@tabler/icons-react";
 import { Calendar } from "@mantine/dates";
 import dayjs from "dayjs";
@@ -89,7 +89,7 @@ export default function Page() {
     })
   }
   return (
-    <main className="flex-auto z-1">
+    <Box component="main" flex="auto" my="sm" className="z-1">
       <Modal opened={addModal} centered onClose={() => setAddModal(false)} title="添加账号">
         <Input.Wrapper label="账号">
           <Input placeholder="请输入账号" ref={phone} />
@@ -111,7 +111,9 @@ export default function Page() {
       </Container>
       <Container size="xl">
         { loading ? (
-          <Loader size="lg" />
+          <Center>
+            <Loader size="lg" />
+          </Center>
         ) :(
           <Box>
             <Flex direction={{base: 'column', md: 'row'}} gap="md">
@@ -200,7 +202,7 @@ export default function Page() {
                         <Popover.Target>
                           <div className="w-full h-full flex items-center justify-center">{day}</div>
                         </Popover.Target>
-                        <Popover.Dropdown>
+                        <Popover.Dropdown p="0">
                           <Table>
                             <Table.Tbody>
                               {draw_logs.map((log, index) => (
@@ -245,6 +247,6 @@ export default function Page() {
           </Box>
         ) }
       </Container>
-    </main>
+    </Box>
   )
 }
