@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {ActionIcon, Avatar, Box, Button, Card, Container, Flex, Group, Input, List, Menu, Modal, Popover, SegmentedControl, Table, ThemeIcon, Typography, UnstyledButton} from "@mantine/core";
+import { Avatar, Box, Button, Card, Container, Flex, Group, Input, List, Loader, Menu, Modal, Popover, SegmentedControl, Table, ThemeIcon, Typography, UnstyledButton} from "@mantine/core";
 import { IconCircleCheck, IconCircleDashed, IconDotsVertical, IconPlus, IconRestore, IconTrash } from "@tabler/icons-react";
 import { Calendar } from "@mantine/dates";
 import dayjs from "dayjs";
@@ -19,6 +19,7 @@ export default function Page() {
   const [accounts, setAccounts] = React.useState<YNP.Account[]>([]);
   const [account, setAccount] = React.useState<YNP.Account>();
 
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<YNP.User|undefined>(undefined);
   const [tasks, setTasks] = React.useState<YNP.Task[]>([]);
   const [drawInfo, setDrawInfo] = React.useState<YNP.DrawInfo|undefined>(undefined);
@@ -29,7 +30,6 @@ export default function Page() {
   const [zhunongLogs, setZhunongLogs] = React.useState<any[]>([]);
   const [couponInfo, setCouponInfo] = React.useState<YNP.CouponInfo|undefined>(undefined);
   const [couponLogs, setCouponLogs] = React.useState<YNP.CouponLog[]>([]);
-  const input = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     api.ynp.tokens().then(({data}) => {
@@ -39,17 +39,19 @@ export default function Page() {
   }, []);
   React.useEffect(() => {
     if(account) {
-      api.ynp.login(account.phone, account.pwd).then( user => {
+      setLoading(true);
+      api.ynp.login(account.phone, account.pwd).then( async user => {
         setUser(user);
-        api.ynp.tasks(user.accessToken).then(v => setTasks(v??[]));
-        api.ynp.drawInfo(user.accessToken).then(setDrawInfo);
-        api.ynp.drawLogs(user.accessToken).then(v => setDrawLogs(v??[]));
-        api.ynp.growthInfo(user.accessToken).then(setGrowthInfo);
-        api.ynp.growthLogs(user.accessToken).then(v => setGrowthLogs(v??[]));
-        api.ynp.zhunongInfo(user.accessToken).then(setZhunongInfo);
-        api.ynp.zhunongLogs(user.accessToken).then(v => setZhunongLogs(v??[]));
-        api.ynp.couponInfo(user.accessToken).then(setCouponInfo);
-        api.ynp.couponLogs(user.accessToken).then(v => setCouponLogs(v??[]));
+        setTasks(await api.ynp.tasks(user.accessToken));
+        setDrawInfo(await api.ynp.drawInfo(user.accessToken));
+        setDrawLogs(await api.ynp.drawLogs(user.accessToken));
+        setGrowthInfo(await api.ynp.growthInfo(user.accessToken));
+        setGrowthLogs(await api.ynp.growthLogs(user.accessToken));
+        setZhunongInfo(await api.ynp.zhunongInfo(user.accessToken));
+        setZhunongLogs(await api.ynp.zhunongLogs(user.accessToken));
+        setCouponInfo(await api.ynp.couponInfo(user.accessToken));
+        setCouponLogs(await api.ynp.couponLogs(user.accessToken));
+        setLoading(false);
       })
     }
   }, [account?.id]);
@@ -108,7 +110,9 @@ export default function Page() {
         />
       </Container>
       <Container size="xl">
-        { user && (
+        { loading ? (
+          <Loader size="lg" />
+        ) :(
           <Box>
             <Flex direction={{base: 'column', md: 'row'}} gap="md">
               <Box className="flex-auto max-md:w-full">
@@ -161,10 +165,10 @@ export default function Page() {
                         </div>
                         <div>
                           {task.isFinish ? (<Button size="xs" disabled>已完成</Button>) : (
-                            task.taskType == 'TASK_SIGN' ? (<Button size="xs" onClick={() => api.ynp.sign(user.accessToken)}>去完成</Button>) : 
-                            task.taskType == 'TASK_MALL' ? (<Button size="xs" onClick={() => api.ynp.view(user.accessToken, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>去完成</Button>) : 
-                            task.taskType == 'TASK_GET_BT' ? (<Button size="xs" onClick={() => api.ynp.draw(user.accessToken)}>去完成</Button>) : 
-                            task.taskType == 'TASK_SHARE' ? (<Button size="xs" onClick={() => api.ynp.share(user.accessToken, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>去完成</Button>) : 
+                            task.taskType == 'TASK_SIGN' ? (<Button size="xs" onClick={() => api.ynp.sign(user!.accessToken)}>去完成</Button>) : 
+                            task.taskType == 'TASK_MALL' ? (<Button size="xs" onClick={() => api.ynp.view(user!.accessToken, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>去完成</Button>) : 
+                            task.taskType == 'TASK_GET_BT' ? (<Button size="xs" onClick={() => api.ynp.draw(user!.accessToken)}>去完成</Button>) : 
+                            task.taskType == 'TASK_SHARE' ? (<Button size="xs" onClick={() => api.ynp.share(user!.accessToken, zhunongInfo?.recommendProducts[Math.floor(Math.random() * zhunongInfo?.recommendProducts.length)].productMainId!)}>去完成</Button>) : 
                             null
                           )}
                         </div>
