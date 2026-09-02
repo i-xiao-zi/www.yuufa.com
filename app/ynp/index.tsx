@@ -192,7 +192,7 @@ export default function Page() {
                       const coupon_logs = couponLogs.filter(log => dayjs.unix(log.createTime).isSame(date, 'day')).sort((a, b) => a.createTime - b.createTime);
                       return draw_logs.length + growth_logs.length + zhunong_logs.length === 0 
                       ? (<div className="w-full h-full flex items-center justify-center">{day}</div>)
-                      : (<Popover width={400} trapFocus withArrow shadow="md">
+                      : (<Popover width={450} trapFocus withArrow shadow="md">
                         <Popover.Target>
                           <div className="w-full h-full flex items-center justify-center">{day}</div>
                         </Popover.Target>
