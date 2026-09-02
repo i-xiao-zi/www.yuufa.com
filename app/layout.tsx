@@ -66,6 +66,10 @@ export default function Layout({children}: React.PropsWithChildren){
           </ContextMenuProvider>
         </MantineProvider>
         {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />}
+        {process.env.NODE_ENV == 'production' && (
+          <script src="https://hm.baidu.com/hm.js?cc189cabf6589293ddbcb5f8ee51c338" />
+        )}
+
       </body>
     </html>
   );
