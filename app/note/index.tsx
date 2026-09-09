@@ -17,12 +17,7 @@ export default function Page() {
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: true,
-    extensions: [StarterKit.configure({
-      undoRedo: false,
-      heading: {
-        levels: [1,2,3]
-      }
-    })],
+    extensions: [],
     content: '<p>Subtle rich text editor variant</p>',
     // onUpdate: (props) => {
     //   console.log(props);

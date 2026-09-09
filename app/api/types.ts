@@ -1,4 +1,4 @@
-import type { Tables } from "./supabase";
+import type { Tables } from "supabase/types";
 
 export interface Paginate<T=any> {
     data: T;
