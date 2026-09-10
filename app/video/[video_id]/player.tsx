@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, Flex, SimpleGrid } from "@mantine/core";
 import { createPlayer } from '@videojs/react';
-import { VideoSkin, Video, videoFeatures } from '@videojs/react/video';
+import { VideoSkin, videoFeatures } from '@videojs/react/video';
 import { HlsJsVideo } from '@videojs/react/media/hlsjs-video';
 import '@videojs/react/video/skin.css';
 
