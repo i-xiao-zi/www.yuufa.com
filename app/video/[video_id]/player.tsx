@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Flex, SimpleGrid } from "@mantine/core";
 import { createPlayer } from '@videojs/react';
 import { VideoSkin, Video, videoFeatures } from '@videojs/react/video';
-import { HlsJsVideo } from '@videojs/react/media/hlsjs-video';
+import { HlsVideo } from '@videojs/react/media/hls-video';
 import '@videojs/react/video/skin.css';
 
 interface Link {
@@ -29,7 +29,7 @@ export default function VideoPlayer({urls}: {urls: string}){
     <Flex className="flex" direction={{base: 'column', md: 'row'}} gap={2}>
       <Player.Player>
         <VideoSkin className="rounded-none">
-          {link && <HlsJsVideo src={link.url} className="h-600" playsInline />}
+          {link && <HlsVideo src={link.url} className="h-600" playsInline />}
         </VideoSkin>
       </Player.Player>
       <SimpleGrid cols={2} w={300}>
